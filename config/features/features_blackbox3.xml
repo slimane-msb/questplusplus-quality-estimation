@@ -9,5 +9,5 @@
     <feature class="shef.mt.features.impl.bb.Feature9306"  index="9306"/>
     <feature class="shef.mt.features.impl.bb.Feature9307"  index="9307"/>
 	<feature class="shef.mt.features.impl.bb.Feature1300" description="Kullback-Leibler divergence of source and target topic distributions" index="1300"/>
-    	<feature class="shef.mt.features.impl.bb.Feature1301" description="Jensen-Shannon divergence of source and target topic distributions" index="1301"/>
+    <feature class="shef.mt.features.impl.bb.Feature1301" description="Jensen-Shannon divergence of source and target topic distributions" index="1301"/>
 </features>
