@@ -44,6 +44,11 @@ public class SentenceLevelProcessorFactory {
         ArrayList<ResourceProcessor> sourceProcessors = new ArrayList<ResourceProcessor>();
         ArrayList<ResourceProcessor> targetProcessors = new ArrayList<ResourceProcessor>();
 
+        if (requirements.contains("source.simplewords")){
+            ComplexWordsProcessor complexWordsProcessor = this.getComplexWordsProcessor();
+            sourceProcessors.add(complexWordsProcessor);
+        }
+
         if (requirements.contains("target.mqm.slang")){
             VariantsSlangProcessor variantsSlangProcessor = this.getVariantsSlangProcessor();
             targetProcessors.add(variantsSlangProcessor);
@@ -307,6 +312,18 @@ public class SentenceLevelProcessorFactory {
 
             //Add them to processor vectors:
             targetProcessors.add(punctuationProcessor);
+        }
+
+        // implementing getComplexWordsProcessor() 
+        private ComplexWordsProcessor getComplexWordsProcessor() {
+            //Register resource:
+            ResourceManager.registerResource("source.simplewords");
+            //Get paths to stop word lists:
+            String path = this.fe.getResourceManager().getProperty("source.simplewords");
+            //Generate processors:
+            ComplexWordsProcessor processor = new ComplexWordsProcessor(path);
+            //Return processors:
+            return processor;
         }
 
         //Transform array lists in vectors:
