@@ -25,14 +25,27 @@ file which has a similar layout to the Java properties file.
 
 from argparse import ArgumentParser, RawDescriptionHelpFormatter
 from evaluation_measures import root_mean_squared_error, mean_absolute_error
-from sklearn.ensemble.forest import ExtraTreesClassifier
-from sklearn.grid_search import GridSearchCV
-from sklearn.linear_model.coordinate_descent import LassoCV
-from sklearn.linear_model.least_angle import LassoLarsCV, LassoLars
-from sklearn.linear_model.randomized_l1 import RandomizedLasso
-from sklearn.metrics.metrics import mean_squared_error, f1_score, \
-    precision_score, recall_score
-from sklearn.svm.classes import SVR, SVC
+# from sklearn.ensemble.forest import ExtraTreesClassifier
+# from sklearn.grid_search import GridSearchCV
+# from sklearn.linear_model.coordinate_descent import LassoCV
+# from sklearn.linear_model.least_angle import LassoLarsCV, LassoLars
+# from sklearn.linear_model.randomized_l1 import RandomizedLasso
+# from sklearn.metrics.metrics import mean_squared_error, f1_score, \
+#     precision_score, recall_score
+# from sklearn.svm.classes import SVR, SVC
+
+# sklearn 20.3
+from sklearn.ensemble import ExtraTreesClassifier
+from sklearn.model_selection import GridSearchCV
+from sklearn.linear_model import LassoCV, LassoLarsCV, LassoLars
+# from sklearn.linear_model.randomized_lasso import RandomizedLasso
+# sklearn 20.3
+from sklearn.linear_model import RandomizedLasso
+
+from sklearn.metrics import mean_squared_error, f1_score, precision_score, recall_score
+from sklearn.svm import SVR, SVC
+
+
 from sklearn_utils import scale_datasets, open_datasets, assert_number, \
     assert_string
 import logging as log
@@ -155,7 +168,7 @@ def set_optimization_params(opt):
             params[key] = np.linspace(item[0], item[1], num=item[2], endpoint=True)
             
         elif isinstance(item, list) and assert_string(item):
-            print key, item
+            print (key, item)
             params[key] = item
     
     return params
@@ -169,10 +182,18 @@ def optimize_model(estimator, X_train, y_train, params, scores, folds, verbose, 
         log.debug(params)
         log.debug(scores)
         
-        clf = GridSearchCV(estimator, params, loss_func=score_func, 
-                           cv=folds, verbose=verbose, n_jobs=n_jobs)
+        # clf = GridSearchCV(estimator, params, loss_func=score_func, 
+        #                    cv=folds, verbose=verbose, n_jobs=n_jobs)
+
+        # sklearn >=0.17.1
+        clf = GridSearchCV(estimator=estimator, param_grid=params, scoring=score_func, 
+                   cv=folds, verbose=verbose, n_jobs=n_jobs)
+
         
-        clf.fit(X_train, y_train)
+        # clf.fit(X_train, y_train)
+
+        clf.fit(X=X_train, y=y_train)
+
         
         log.info("Best parameters set found on development set:")
         log.info(clf.best_params_)
@@ -203,12 +224,21 @@ def set_learning_method(config, X_train, y_train):
         if method_name == "SVR":
             if o:
                 tune_params = set_optimization_params(o)
+                # estimator = optimize_model(SVR(), X_train, y_train, 
+                #                           tune_params, 
+                #                           scorers, 
+                #                           o.get("cv", 5),
+                #                           o.get("verbose", True),
+                #                           o.get("n_jobs", 1))
+                
+                # sklearn 0.17.1
                 estimator = optimize_model(SVR(), X_train, y_train, 
-                                          tune_params, 
-                                          scorers, 
-                                          o.get("cv", 5),
-                                          o.get("verbose", True),
-                                          o.get("n_jobs", 1))
+                            tune_params, 
+                            scorers, 
+                            o.get("cv", 5),
+                            o.get("verbose", True),
+                            o.get("n_jobs", 1))
+
                 
             elif p:
                 estimator = SVR(C=p.get("C", 10),
@@ -425,9 +455,14 @@ def run(config):
     log.debug("y_test_path: %s" % y_test_path)
 
     # open feature and response files    
-    X_train, y_train, X_test, y_test, labels = \
-    open_datasets(x_train_path, y_train_path, x_test_path,
-                  y_test_path, separator, labels_path)
+    # X_train, y_train, X_test, y_test, labels = \
+    # open_datasets(x_train_path, y_train_path, x_test_path,
+    #               y_test_path, separator, labels_path)
+
+    # sklearn 0.17.1
+    X_train, y_train, X_test, y_test, labels = open_datasets(x_train_path, y_train_path, x_test_path, y_test_path, separator, labels_path)
+
+
 
     if scale:
         # preprocess and execute mean removal
@@ -436,6 +471,9 @@ def run(config):
     # fits training data and predicts the test set using the trained model
     y_hat = fit_predict(config, X_train, y_train, X_test, y_test, config.get("ref_thd", None))
     
+    # sklearn 0.17.1
+    # y_hat = fit_predict(config, X_train, y_train, X_test, y_test, config.get("ref_thd", None))
+
     
 def main(argv=None): # IGNORE:C0111
     '''Command line options.'''

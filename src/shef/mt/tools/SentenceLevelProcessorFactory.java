@@ -314,17 +314,7 @@ public class SentenceLevelProcessorFactory {
             targetProcessors.add(punctuationProcessor);
         }
 
-        // implementing getComplexWordsProcessor() 
-        private ComplexWordsProcessor getComplexWordsProcessor() {
-            //Register resource:
-            ResourceManager.registerResource("source.simplewords");
-            //Get paths to stop word lists:
-            String path = this.fe.getResourceManager().getProperty("source.simplewords");
-            //Generate processors:
-            ComplexWordsProcessor processor = new ComplexWordsProcessor(path);
-            //Return processors:
-            return processor;
-        }
+
 
         //Transform array lists in vectors:
         ResourceProcessor[] sourceProcessorVector = new ResourceProcessor[sourceProcessors.size()];
@@ -334,6 +324,18 @@ public class SentenceLevelProcessorFactory {
 
         //Return vectors:
         this.resourceProcessors = new ResourceProcessor[][]{sourceProcessorVector, targetProcessorVector};
+    }
+
+    // implementing getComplexWordsProcessor() 
+    private ComplexWordsProcessor getComplexWordsProcessor() {
+        //Register resource:
+        ResourceManager.registerResource("source.simplewords");
+        //Get paths to stop word lists:
+        String path = this.fe.getResourceManager().getProperty("source.simplewords");
+        //Generate processors:
+        ComplexWordsProcessor processor = new ComplexWordsProcessor(path);
+        //Return processors:
+        return processor;
     }
 
     private PunctuationProcessor getPunctuationProcessor() {
