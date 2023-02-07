@@ -41,6 +41,9 @@ import os
 import sys
 import yaml
 
+# adding a new methode : 
+from sklearn import linear_model
+
 from customize_scorer import pearson_corrcoef, binary_precision, classify_report_bin, classify_report_bin_regression, classify_report_regression
 
 __all__ = []
@@ -285,6 +288,38 @@ def set_learning_method(config, X_train, y_train):
                                         verbose=False)
             else:
                 estimator = LassoLarsCV()
+
+        # adding a new methode : 
+        elif method_name == "Ridge":
+            if o:
+                tune_params = set_optimization_params(o)
+                estimator = optimize_model(linear_model.Ridge(), X_train, y_train,
+                                            tune_params,
+                                            scorers,
+                                            o.get("cv", 5),
+                                            o.get("verbose", True),
+                                            o.get("n_jobs", 1))
+            elif p:
+                estimator = linear_model.Ridge(alpha =0.5)
+            else:
+                estimator = linear_model.Ridge()
+
+
+        # sklearn 0.20.3
+        # elif method_name == "Ridge":
+        #     if o:
+        #         tune_params = set_optimization_params(o)
+        #         estimator = optimize_model(linear_model.Ridge(), X_train, y_train,
+        #                                     tune_params,
+        #                                     scorers,
+        #                                     o.get("cv", 5),
+        #                                     o.get("verbose", True),
+        #                                     o.get("n_jobs", 1))
+        #     elif p:
+        #         estimator = linear_model.Ridge(alpha =0.5)
+        #     else:
+        #         estimator = linear_model.Ridge()
+
                 
     return estimator, scorers
 
