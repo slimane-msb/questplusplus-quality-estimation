@@ -31,3 +31,8 @@ df = pd.read_csv("learning/data/features/dataset/test.qe.tsv", sep="\t", header=
 df.fillna(0, inplace=True)
 df.to_csv('learning/data/features/dataset/test.qe.nona.tsv', index=False, header=None, sep="\t")
 print(df)
+
+df = pd.read_csv("learning/data/features/dataset/training.qe.tsv", sep="\t", header=None)
+df.fillna(0, inplace=True)
+df.to_csv('learning/data/features/dataset/training.qe.nona.tsv', index=False, header=None, sep="\t")
+print(df)
