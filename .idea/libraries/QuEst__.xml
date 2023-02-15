@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="QuEst++">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/QuEst++.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

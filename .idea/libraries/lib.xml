@@ -1,0 +1,28 @@
+<component name="libraryTable">
+  <library name="lib">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/stanford-corenlp-3.5.1-sources.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/lucene-core-3.6.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/joda-time.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/javax.json.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/joda-time-2.1-sources.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/jollyday.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/xom-1.2.10-src.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/stanford-corenlp-3.5.1-javadoc.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/xom.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/uwnapi.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/BerkeleyParser-1.7.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/commons-lang3-3.4.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/commons-cli-1.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/commons-io-2.4.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/stanford-corenlp-3.5.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/MTFeatures.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/commons-lang-2.6.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/ejml-0.23.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/javax.json-api-1.0-sources.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/jollyday-0.4.7-sources.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
